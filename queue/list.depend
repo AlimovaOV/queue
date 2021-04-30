@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1554140085 source:c:\users\oval\desktop\code_blocks_programm\list\main.cpp
+	<iostream>
+	<stdlib.h>
+
+1488453871 source:c:\users\oval\desktop\code_blocks_programm\list22\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+
+1554286039 source:c:\users\oval\desktop\code_blocks_programm\list_2link\main.cpp
+	<iostream>
+	<stdlib.h>
+
+1582807587 source:c:\users\oval\desktop\code_blocks_programm\2 semestr\list_2link\main.cpp
+	<iostream>
+	<stdlib.h>
+
+1582882934 source:c:\users\oval\desktop\Очереди\list_2link\main.cpp
+	<iostream>
+	<stdlib.h>
+
+1582981500 source:c:\users\oval\desktop\ohered\list_2link\main.cpp
+	<iostream>
+	<stdlib.h>
+
+1583317655 source:c:\users\oval\desktop\ohered\queue\main.cpp
+	<iostream>
+	<stdlib.h>
+	<ctime>
+
+1583852800 source:e:\ohered\queue\main.cpp
+	<iostream>
+	<stdlib.h>
+	<ctime>
+
+1584285786 source:d:\ohered\queue\main.cpp
+	<iostream>
+	<stdlib.h>
+	<ctime>
+
+1584357486 source:i:\ohered\queue\main.cpp
+	<iostream>
+	<stdlib.h>
+	<ctime>
+
+1619595620 source:c:\users\oval\desktop\code_blocks_programm\2 semestr\ohered\queue\main.cpp
+	<iostream>
+	<stdlib.h>
+	<ctime>
+
