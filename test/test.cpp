@@ -32,7 +32,8 @@ using std::cout;
 typedef struct link
 {
 	int id;
-	int type, from;
+	int type, // тип задания, вероятность, счетчик в зависимости от задания
+		from; // флаг возврата звдания в очередь после ОА, время очереди не будет меняться
 	double time_in, time_work, time_out;
 	link* next,
 		* prev;
@@ -66,15 +67,15 @@ struct queue
 //const double W21 = 0;
 //const double W22 = 4;
 
-//                         task3:
-const double T11 = -1;//
-const double T12 = -1;//
-const double W11 = 0;
-const double W12 = 6;
-const double T21 = -1;//
-const double T22 = -1;//
-const double W21 = 1;
-const double W22 = 8;
+////                         task3:
+//const double T11 = -1;//
+//const double T12 = -1;//
+//const double W11 = 0;
+//const double W12 = 6;
+//const double T21 = -1;//
+//const double T22 = -1;//
+//const double W21 = 1;
+//const double W22 = 8;
 
 //                         task4:
 //const double T11 = 0;
@@ -97,14 +98,14 @@ const double W22 = 8;
 //const double W22 = 1;
 
 //                         task6:
-//const double T11 = 1;
-//const double T12 = 3;
-//const double W11 = 3;
-//const double W12 = 5;
-//const double T21 = -1;//
-//const double T22 = -1;//
-//const double W21 = 0;
-//const double W22 = 2;
+const double T11 = 1;
+const double T12 = 3;
+const double W11 = 3;
+const double W12 = 5;
+const double T21 = -1;//
+const double T22 = -1;//
+const double W21 = 0;
+const double W22 = 2;
 
 //                         task7:
 //const double T11 = 1;
@@ -753,7 +754,7 @@ void task5() // ок
 	cout << "queue 2 in = " << q2.countin << " queue 2 out = " << q2.countout << endl;
 	cout << "task count = " << (cc1 + cc2) << " time_work = " << tw << " time_stop = " << ts << endl;
 }
-void task6() // время работы ОА2 меньше времени работы ОА1, почему?
+void task6() // ok
 {
 	queue q1;
 	queue q2;
@@ -1092,7 +1093,7 @@ void task8() //ок
 int main()
 {
 	srand(time(0));
-	task3();
+	task6();
 	//   cout<<endl<<"lst = ";
 	//  print(q);
 	return 0;

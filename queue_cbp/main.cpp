@@ -32,7 +32,8 @@ using std::cout;
 typedef struct link
 {
 	int id;
-	int type, from;
+	int type, // тип задани€, веро€тность, счетчик в зависимости от задани€
+		from; // флаг возврата звдани€ в очередь после ќј, врем€ очереди не будет мен€тьс€
 	double time_in, time_work, time_out;
 	link* next,
 		* prev;
@@ -66,7 +67,7 @@ struct queue
 //const double W21 = 0;
 //const double W22 = 4;
 
-//                         task3:
+////                         task3:
 //const double T11 = -1;//
 //const double T12 = -1;//
 //const double W11 = 0;
@@ -97,14 +98,14 @@ struct queue
 //const double W22 = 1;
 
 //                         task6:
-//const double T11 = 1;
-//const double T12 = 3;
-//const double W11 = 3;
-//const double W12 = 5;
-//const double T21 = -1;//
-//const double T22 = -1;//
-//const double W21 = 0;
-//const double W22 = 2;
+const double T11 = 1;
+const double T12 = 3;
+const double W11 = 3;
+const double W12 = 5;
+const double T21 = -1;//
+const double T22 = -1;//
+const double W21 = 0;
+const double W22 = 2;
 
 //                         task7:
 //const double T11 = 1;
@@ -117,14 +118,14 @@ struct queue
 //const double W22 = 3;
 
 //                         task8:
-const double T11 = -1; //
-const double T12 = -1; //
-const double W11 = 0;
-const double W12 = 0.02;
-const double T21 = -1; //
-const double T22 = -1; //
-const double W21 = 1;
-const double W22 = 5;
+//const double T11 = -1; //
+//const double T12 = -1; //
+//const double W11 = 0;
+//const double W12 = 0.02;
+//const double T21 = -1; //
+//const double T22 = -1; //
+//const double W21 = 1;
+//const double W22 = 5;
 const double W31 = 3;
 const double W32 = 9;
 
@@ -510,7 +511,7 @@ void task2() // ок
 	cout << "queue in = " << q.countin << " queue out = " << q.countout << endl;
 	cout << "task count = " << (cc1 + cc2) << " time_work = " << tw << " time_stop = " << ts << endl;
 }
-void task3() // ок
+void task3() //ок
 {
 	queue q1;
 	queue q2;
@@ -533,37 +534,51 @@ void task3() // ок
 		statistic(tmp1, x1, tx1, m1, s1);
 	}
 	list* tmp2 = NULL;
-	while (tmp1 || tmp2)
+	while (q1.head || q2.head || tmp1 || tmp2)
 	{
 		if (tmp1)
 		{
 			set_type(tmp1, rand() % 10);
+			set_in(tmp1, tmp1->time_work);
 			if (tmp1->type < p)
 			{
-				change_from(tmp1, 0);
 				push(q1, tmp1);
-				set_in(tmp1, tmp1->time_out+tmp1->time_work);
+				set_in(tmp1, tmp1->time_out + tmp1->time_work); // врем€ входа при повторной обработке
+				q2.tec_time = q1.tec_time;  // врем€ идет параллельно
 			}
 			else
 			{
-				change_work(tmp1, W21, W22);
 				push(q2, tmp1);
+				change_work(tmp1, W21, W22);
+				q1.tec_time = q2.tec_time; // врем€ идет параллельно
 			}
+
 			tmp1 = NULL;
 		}
+				//cout << endl << "lst1 = " << q1.tec_time;
+				//print(q1);
+				//cout << endl << "lst2 = " << q2.tec_time;
+				//print(q2);
 		tmp1 = oa(q1, tw1, ts1, ti1, cc11, cc21); //взяли на обработку
 		if (tmp1)
 		{
 			statistic(tmp1, x1, tx1, m1, s1);
 		}
-		tmp2 = oa(q2, tw2, ts2, ti2, cc12, cc22); //взяли на обработку
-		if (tmp2)
-		{
-			statistic(tmp2, x2, tx2, m2, s2);
+
+		if (tmp2 == NULL) {
+			tmp2 = oa(q2, tw2, ts2, ti2, cc12, cc22); //взяли на обработку
+			if (tmp2)
+			{
+				statistic(tmp2, x2, tx2, m2, s2);
+			}
 		}
-		delete tmp2;
-		tmp2 = NULL;
-		if ((cc11 + cc21) % (nn / 10) == 0 || (cc12 + cc22) % (nn / 10) == 0)  // вывод статистики каждые 100 шагов
+		if (q2.head && top(q2)->time_in < q2.tec_time || q1.head == NULL) {
+				delete tmp2;		// удал€ем из 2 очереди если врем€ пришло или новых за€вок уже не будет
+				tmp2 = NULL;
+
+			}
+
+		if ((cc11 + cc21 + cc12 + cc22) % (nn / 10) == 0)  // вывод статистики каждые 100 шагов
 		{
 			cout << endl << cc11 + cc21 << endl << " 1 task " << x1 << " (" << tx1 << ")  max = " << m1 << " aver = " << s1 / (cc11 + cc21) << endl;
 			cout << "queue1 in = " << q1.countin << " queue1 length = " << q1.countin - q1.countout << endl;
@@ -739,7 +754,7 @@ void task5() // ок
 	cout << "queue 2 in = " << q2.countin << " queue 2 out = " << q2.countout << endl;
 	cout << "task count = " << (cc1 + cc2) << " time_work = " << tw << " time_stop = " << ts << endl;
 }
-void task6() // врем€ работы ќј2 меньше времени работы ќј1, почему?
+void task6() // ok
 {
 	queue q1;
 	queue q2;
@@ -1078,7 +1093,7 @@ void task8() //ок
 int main()
 {
 	srand(time(0));
-	task8();
+	task6();
 	//   cout<<endl<<"lst = ";
 	//  print(q);
 	return 0;
